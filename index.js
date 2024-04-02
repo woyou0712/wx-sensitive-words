@@ -54,8 +54,12 @@ class WX {
           `https://api.weixin.qq.com/sns/jscode2session?appid=${this.appid}&secret=${this.secret}&js_code=${code}&grant_type=authorization_code`
         )
         .then(({ data }) => {
-          this.openid = data.openid;
-          resolve(data.openid);
+          if (data.openid) {
+            this.openid = data.openid;
+            resolve(data.openid);
+            return;
+          }
+          reject(data);
         })
         .catch((err) => reject(err));
     });
