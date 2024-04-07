@@ -100,6 +100,36 @@ class WX {
         .catch((err) => reject(err));
     });
   }
+  /**
+   * 获取小程序二维码
+   * @param {String} path
+   * @param {String} scene
+   * @param {{env_version:string;width:number;auto_color:boolean;line_color:{r:number;g:number;b:number}}} data
+   * @returns {Promise<buffer>}
+   */
+  getWxacodeunlimit(page, scene, data = {}) {
+    return new Promise(async (resolve, reject) => {
+      if (!page || !scene) {
+        reject("page or scene is null");
+        return;
+      }
+      const access_token = await this.getAccessToken();
+      axios
+        .post(
+          `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${access_token}`,
+          { page, scene, ...data },{ responseType: 'arraybuffer'}
+        )
+        .then(({ data }) => {
+          const res = data.toString()
+          if (res.indexOf("errmsg")>=0) {
+            reject(JSON.parse(res).errmsg);
+            return;
+          }
+          resolve(data);
+        })
+        .catch((e) => reject(e));
+    });
+  }
 }
 
 module.exports = WX;
