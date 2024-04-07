@@ -14,16 +14,30 @@ const labelMap = {
 };
 
 class WX {
+  /**
+   * APPID
+   * @type {string}
+   */
   appid = null;
+  /**
+   * 小程序秘钥
+   * @type {string}
+   */
   secret = null;
+  /**
+   * 小程序版本
+   * @type {"release"|"trial"|"develop"}
+   */
+  env_version = null;
   openid = "";
   accessToken = {
     access_token: "",
     endTime: 0,
   };
-  constructor(appid, secret) {
+  constructor(appid, secret, env_version = "release") {
     this.appid = appid;
     this.secret = secret;
+    this.env_version = env_version;
   }
 
   // 获取access_token
@@ -104,7 +118,7 @@ class WX {
    * 获取小程序二维码
    * @param {String} path
    * @param {String} scene
-   * @param {{env_version:string;width:number;auto_color:boolean;line_color:{r:number;g:number;b:number}}} data
+   * @param {{width:number;auto_color:boolean;line_color:{r:number;g:number;b:number}}} data 其他参数,参考微信官方文档
    * @returns {Promise<buffer>}
    */
   getWxacodeunlimit(page, scene, data = {}) {
@@ -117,11 +131,12 @@ class WX {
       axios
         .post(
           `https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${access_token}`,
-          { page, scene, ...data },{ responseType: 'arraybuffer'}
+          { page, scene, env_version: this.env_version, ...data },
+          { responseType: "arraybuffer" }
         )
         .then(({ data }) => {
-          const res = data.toString()
-          if (res.indexOf("errmsg")>=0) {
+          const res = data.toString();
+          if (res.indexOf("errmsg") >= 0) {
             reject(JSON.parse(res).errmsg);
             return;
           }
