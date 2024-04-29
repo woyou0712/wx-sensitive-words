@@ -121,7 +121,7 @@ class WX {
    * @param {{width:number;auto_color:boolean;line_color:{r:number;g:number;b:number}}} data 其他参数,参考微信官方文档
    * @returns {Promise<buffer>}
    */
-  getWxacodeunlimit(page, scene, data = {}) {
+  getAppletQrCode(page, scene, data = {}) {
     return new Promise(async (resolve, reject) => {
       if (!page || !scene) {
         reject("page or scene is null");

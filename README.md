@@ -26,7 +26,7 @@ wx.sensitiveWords("敏感词", "openid").then(({ bool, message }) => {
 
 // 获取小程序二维码
 const filePath = `./static/fileName.png`;
-const result = await wx.getWxacodeunlimit("pages/code/code", "scene", {
+const result = await wx.getAppletQrCode("pages/code/code", "scene", {
   check_path: false,
   width: 280,
 });
