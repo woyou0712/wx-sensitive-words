@@ -1,7 +1,7 @@
 {
   "name": "wx-sensitive-words",
-  "version": "1.1.1",
-  "description": "微信小程序敏感词查询",
+  "version": "1.2.0",
+  "description": "微信小程序敏感词查询等常用功能",
   "main": "index.js",
   "scripts": {
     "build": "npm publish"

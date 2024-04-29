@@ -85,7 +85,7 @@ class WX {
    * @param {String} openid 小程序用户的openId，需要两小时进入过小程序的
    * @returns
    */
-  checkout(content, openid = this.openid, scene = 2) {
+  sensitiveWords(content, openid = this.openid, scene = 2) {
     return new Promise(async (resolve, reject) => {
       if (!openid) {
         reject("not openid");
